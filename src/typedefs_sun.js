@@ -19,10 +19,10 @@ const typeDefs = gql`
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
-    getSunTimesForLocation(
+    getSunTimesForLocations(
       from: String!
       to: String!
-      location: String!
+      locations: [String!]!
     ): [SunData]
     # getSunTimesForLocationToday(location: String!, type: DATA_TYPE): [SunData]
   }

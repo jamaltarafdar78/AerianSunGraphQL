@@ -17,10 +17,10 @@ const sunDataMock = {
 };
 
 const testCase = {
-  id: "getSunTimesForLocation",
+  id: "getSunTimesForLocations",
   query: `
-    query getSunTimes($from: String!,$to:String!, $location:String! ){ 
-      getSunTimesForLocation(from: $from, to: $to, location: $location){
+    query getSunTimes($from: String!,$to:String!, $locations:[String!]! ){ 
+      getSunTimesForLocations(from: $from, to: $to, locations: $locations){
         date
         time
         type
@@ -28,10 +28,10 @@ const testCase = {
       }
     }
   `,
-  variables: { location: "PLYMOUTH", from: "17-Jun-20", to: "18-Jun-20" },
+  variables: { locations: ["PLYMOUTH"], from: "17-Jun-20", to: "18-Jun-20" },
   context: {},
   expected: {
-    data: { getSunTimesForLocation: [sunDataMock] },
+    data: { getSunTimesForLocations: [sunDataMock] },
   },
 };
 
@@ -44,7 +44,7 @@ describe("Schema", () => {
     schema: mockSchema,
     mocks: {
       Query: () => ({
-        getSunTimesForLocation: () => new MockList(1),
+        getSunTimesForLocations: () => new MockList(1),
       }),
       SunData: () => sunDataMock,
     },

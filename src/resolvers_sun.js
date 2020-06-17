@@ -2,29 +2,32 @@ const getDateNumeral = (date) => parseInt(date.split("-")[0], 10);
 
 const resolvers = {
   Query: {
-    getSunTimesForLocation: (_, { from, to, location }, { dataSources }) => {
-      const dataLocation = dataSources.sunData[location];
-
+    getSunTimesForLocations: (_, { from, to, locations }, { dataSources }) => {
       const fromDateNumeral = getDateNumeral(from);
       const toDateNumeral = getDateNumeral(to);
 
       const sunDataArray = [];
 
-      for (let i = fromDateNumeral; i < toDateNumeral; i++) {
-        const currentDate = `${i}-Jun-20`;
-        const sunDataForDate = dataLocation[currentDate];
+      locations.forEach((location) => {
+        const dataLocation = dataSources.sunData[location];
 
-        sunDataForDate.forEach((element) => {
-          const flatten = {
-            location,
-            date: currentDate,
-            time: element.time,
-            type: element.type,
-          };
+        for (let i = fromDateNumeral; i < toDateNumeral; i++) {
+          const currentDate = `${i}-Jun-20`;
+          const sunDataForDate = dataLocation[currentDate];
 
-          sunDataArray.push(flatten);
-        });
-      }
+          sunDataForDate.forEach((element) => {
+            const flatten = {
+              location,
+              date: currentDate,
+              time: element.time,
+              type: element.type,
+            };
+
+            sunDataArray.push(flatten);
+          });
+        }
+      });
+
       return sunDataArray;
     },
   },
