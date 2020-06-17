@@ -1,35 +1,36 @@
-# GraphQL API - Sundata API
+# GraphQL API - Books
 
 ## Run
 
-`node ./src/index_sun.js`
+`node ./src/index.js`
 
 ### Supported Types
 
-SunData
+Book
 
-- location
-- date
-- time
-- type (SUNRISE | SUNSET)
+- title
+- author
+- contentType (FICTION | NON_FICTION)
 
 ### Supported Queries Examples
 
-Get sunset and sunrise times for given dates (from is inclusive, to is exclusive) and locations
+Get titles of all non-fiction books
 
-```query getSunTimes($from: String!,$to:String!, $locations:[String!]! ){
-  getSunTimesForLocations(from: $from, to: $to, locations: $locations){
-    date
-    time
-    type
-    location
+```{
+  getBooksByContentType(contentType: NON_FICTION){
+     title
   }
-
 }
 ```
 
-For example with variables:
+Search all books with "J." in title or author's name
 
 ```
-{"from": "17-Jun-20", "to":"19-Jun-20", "locations": ["LONDON", "PLYMOUTH"]}
+{
+ searchBooks(searchTerm: "J."){
+  title
+  author
+  contentType
+}
+}
 ```
