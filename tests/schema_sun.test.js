@@ -19,12 +19,12 @@ const sunDataMock = {
 const testCase = {
   id: "getSunTimesForLocation",
   query: `
-    query getSunTimesForLocation(from: String, to: String, location:String) {
-      getSunTimesForLocation($from, $to, $location) {
-         location, 
-         date,
-         time,
-         type,
+    query getSunTimes($from: String!,$to:String!, $location:String! ){ 
+      getSunTimesForLocation(from: $from, to: $to, location: $location){
+        date
+        time
+        type
+        location
       }
     }
   `,
