@@ -50,5 +50,43 @@ describe("Query", () => {
         ).toBe(0);
       });
     });
+    describe("when  locations where no data exists", () => {
+      const locations = ["SOMEWHERE"];
+
+      test("then only data for those locations are return", () => {
+        const results = getSunTimesForLocations(
+          {},
+          { from: "17-Jun-20", to: "18-Jun-20", locations },
+          {
+            dataSources: {
+              sunData,
+            },
+          }
+        );
+
+        expect(results.length).toBe(0);
+      });
+    });
+    describe("when supported and unsypporetd locations provided", () => {
+      const locations = ["SOMEWHERE", "PLYMOUTH"];
+
+      test("then only data for those locations are return", () => {
+        const results = getSunTimesForLocations(
+          {},
+          { from: "17-Jun-20", to: "18-Jun-20", locations },
+          {
+            dataSources: {
+              sunData,
+            },
+          }
+        );
+
+        expect(results.length).not.toBe(0);
+        expect(
+          results.length -
+            results.filter((r) => r.location === "PLYMOUTH").length
+        ).toBe(0);
+      });
+    });
   });
 });
