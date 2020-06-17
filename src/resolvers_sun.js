@@ -11,20 +11,22 @@ const resolvers = {
       locations.forEach((location) => {
         const dataLocation = dataSources.sunData[location];
 
-        for (let i = fromDateNumeral; i < toDateNumeral; i++) {
-          const currentDate = `${i}-Jun-20`;
-          const sunDataForDate = dataLocation[currentDate];
+        if (typeof dataLocation !== "undefined") {
+          for (let i = fromDateNumeral; i < toDateNumeral; i++) {
+            const currentDate = `${i}-Jun-20`;
+            const sunDataForDate = dataLocation[currentDate];
 
-          sunDataForDate.forEach((element) => {
-            const flatten = {
-              location,
-              date: currentDate,
-              time: element.time,
-              type: element.type,
-            };
+            sunDataForDate.forEach((element) => {
+              const flatten = {
+                location,
+                date: currentDate,
+                time: element.time,
+                type: element.type,
+              };
 
-            sunDataArray.push(flatten);
-          });
+              sunDataArray.push(flatten);
+            });
+          }
         }
       });
 
